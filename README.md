@@ -1,14 +1,15 @@
-# Leasen 1
-##Ping pong 
+# Ping pong
+## Flask Application 
 
-A Flask app that returns pong to a ping request
+A Flask app that returns pong to a ping request.
 
-To run the app please run the next commands:
+To run the app run the commands:
 
 ```bash
 	pip install flask
 	python app.py
 ```
 
-After the application is running go to the next link 
+After the application is running go to the url:
+
 [http://localhost:5000/ping](http://localhost:5000/ping)
