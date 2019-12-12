@@ -1,13 +1,13 @@
 # Ping pong
-## Flask Application 
+## Containerized Flask Application 
 
-A Flask app that returns pong to a ping request.
+A containerized Flask app that returns pong to a ping request.
 
 To run the app run the commands:
 
 ```bash
-	pip install flask
-	python app.py
+	docker build -t flask-ping:latest .                      # Build the docker image
+	docker run -d -p 5000:5000 --name Ping-flask flask-ping  # Run the Flask container
 ```
 
 After the application is running go to the url:
