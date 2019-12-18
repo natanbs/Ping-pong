@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ping-ingress
+spec:
+  backend:
+    serviceName: ping-svc
+    servicePort: 5000
+
