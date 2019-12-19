@@ -4,6 +4,8 @@
 
 Kubernates with Flask apps that query ping to a Redis db (separate pods) and returns pong counts.
 
+PV PVC storage implemented. After redis pod is restarted, the count is not reset.
+
 To run the app run the commands:
 
 ```bash
