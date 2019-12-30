@@ -35,12 +35,12 @@ Copy the existing deploy and service files to the templates directories:
 
 ```bash
         cd ../..
-        pwd     # Ping-pong/helm
+        pwd          # Ping-pong/helm
         kcf ../ns.yml
 ```
 
 Install the app:
 ```bash
-        helm install flask-ping ./redis-ping        
+        helm install flask-ping ./flask-ping        
         helm install redis-ping ./redis-ping        
 ```
