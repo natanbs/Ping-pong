@@ -40,7 +40,7 @@ In the template
         type: {{ .Values.service.type }}
 ```
 
-In values.yaml you casn find:
+In values.yaml you can find:
 
 ```bash
         service:
@@ -52,4 +52,5 @@ So in values.yaml you will find:
 - .service: The key 
 - .type: The value: Loadbalancer
 
-In this case the template will take the LoadBalancer type from the values.yaml file.
+In this case the template will take the LoadBalancer as the service type from the values.yaml file.
+
