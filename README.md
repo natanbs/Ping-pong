@@ -27,7 +27,8 @@ Example of a template formats:
 
 - .Values: The vlaues.yaml file
 - .name: Taken from the name key in the values.yaml file.
-So if in values.yaml you will find:
+
+In values.yaml you will find:
 ```bash
         name: my-deploy
 ```
