@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: redis-deploy
+  namespace: ping-ns
 spec:
   replicas: 1
   minReadySeconds: 1
@@ -22,9 +23,9 @@ spec:
         - containerPort: 6379
         volumeMounts:
         - mountPath: /data
-          name: redis-volume
+          name: ping-volume
       volumes:
-      - name: redis-volume
+      - name: ping-volume
         persistentVolumeClaim:
-          claimName: redis-pvc
+          claimName: ping-pvc
         

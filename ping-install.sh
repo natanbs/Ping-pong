@@ -1,5 +1,11 @@
 #!/bin/bash
-kubectl create -f svc-redis.yml -f svc-flask.yml -f pv.yml -f pvc.yml -f deploy-redis.yml -f deploy-flask.yml
+kubectl create -f ns.yml 
+kubectl create -f pv.yml 
+kubectl create -f pvc.yml 
+kubectl create -f svc-redis.yml 
+kubectl create -f deploy-redis.yml 
+kubectl create -f svc-flask.yml 
+kubectl create -f deploy-flask.yml
 echo
 echo
-kubectl get all -o wide
+kubectl get all -o wide -n ping-ns
