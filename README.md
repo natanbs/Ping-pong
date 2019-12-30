@@ -1,22 +1,46 @@
 # Ping pong
-## Kubernated Flask with Redis 
+## Helmed Flask with Redis 
 ### Query ping outputs pong counts 
 
-Kubernates with Flask apps that query ping to a Redis db (separate pods) and returns pong counts.
+Use Helm to build Flask apps that query ping to a Redis db (separate pods) and returns pong counts.
 
-PV PVC storage implemented. After redis pod is restarted, the count is not reset.
+In this stage the build will be hard coded installed:
 
-To run the app run the commands:
-
+Create the flask-ping deployment
 ```bash
-	./ping-install.sh
+	mkdir Ping-pong/helm
+        helm create flask-ping
 ```
 
-To check the service IP:
+Copy the existing deploy and service files to the templates directories:
 ```bash
-        kubectl get svc | grep flask | awk '{print $4}'
+        cd flask-ping/templates
+        cp -p ../../../deploy-flask.yml deployment.yaml
+        cp -p ../../../svc-flask.yml service.yaml
 ```
 
-After the containers are up and running, go to the url:
+Create the redis-ping deployment
+```bash
+        helm create redis-ping
+```
 
-[http://{IP}:5000/ping](http://localhost:5000/ping)
+Copy the existing deploy and service files to the templates directories:
+```bash
+        cd redis-ping/templates
+        cp -p ../../../deploy-redis.yml deployment.yaml
+        cp -p ../../../svc-redis.yml service.yaml
+        cp -p ../../../pv.yml .
+        cp -p ../../../pvc.yml .
+```
+
+```bash
+        cd ../..
+        pwd     # Ping-pong/helm
+        kcf ../ns.yml
+```
+
+Install the app:
+```bash
+        helm install flask-ping ./redis-ping        
+        helm install redis-ping ./redis-ping        
+```
