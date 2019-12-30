@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-svc
-  namespace: ping-ns
+  name: {{ .Values.service.name }}
+  namespace: {{ .Values.service.namespace }}
   labels:
-    app: ping-flask
+    app: {{ .Values.service.labels.app }}
 spec:
-  type: LoadBalancer
+  type: {{ .Values.service.type }}
   ports:
-  - name: flask
-    port: 5000
-    nodePort: 30002
-    protocol: TCP
+    - port: {{ .Values.service.port }}
+      name: {{ .Values.service.name }}
+      nodePort: {{ .Values.service.nodePort }}
+      protocol: {{ .Values.service.protocol }}
   selector:
-    app: ping-flask
+    app: {{ .Values.service.selector.app }}

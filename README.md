@@ -4,43 +4,51 @@
 
 Use Helm to build Flask apps that query ping to a Redis db (separate pods) and returns pong counts.
 
-In this stage the build will be hard coded installed:
+Implement Helm templates:
 
-Create the flask-ping deployment
-```bash
-	mkdir Ping-pong/helm
-        helm create flask-ping
-```
+The templates are in the key:value format where the key is taken from the template and the value from the values.yaml
 
-Copy the existing deploy and service files to the templates directories:
-```bash
-        cd flask-ping/templates
-        cp -p ../../../deploy-flask.yml deployment.yaml
-        cp -p ../../../svc-flask.yml service.yaml
-```
-
-Create the redis-ping deployment
-```bash
-        helm create redis-ping
-```
-
-Copy the existing deploy and service files to the templates directories:
-```bash
-        cd redis-ping/templates
-        cp -p ../../../deploy-redis.yml deployment.yaml
-        cp -p ../../../svc-redis.yml service.yaml
-        cp -p ../../../pv.yml .
-        cp -p ../../../pvc.yml .
-```
+The templates are placed under:
 
 ```bash
-        cd ../..
-        pwd          # Ping-pong/helm
-        kcf ../ns.yml
+        Ping-pong/helm/<app>/templates
 ```
 
-Install the app:
+The values are taken from the valies.yaml file:
 ```bash
-        helm install flask-ping ./flask-ping        
-        helm install redis-ping ./redis-ping        
+        Ping-pong/helm/<app>/values.yaml
 ```
+
+Example of a template formats:
+
+```bash
+        name: {{ .Values.name }}
+```
+
+- .Values: The vlaues.yaml file
+- .name: Taken from the name key in the values.yaml file.
+So if in values.yaml you will find:
+```bash
+        name: my-deploy
+```
+The template above will take "my-deploy" for {{ .Values.name }}
+
+Another example:
+In the template 
+```bash
+        type: {{ .Values.service.type }}
+```
+
+In values.yaml you casn find:
+
+```bash
+        service:
+          type: LoadBalancer
+```
+
+So in values.yaml you will find:
+- .Values: The vlaues.yaml file
+- .service: The key 
+- .type: The value: Loadbalancer
+
+In this case the template will take the LoadBalancer type from the values.yaml file.

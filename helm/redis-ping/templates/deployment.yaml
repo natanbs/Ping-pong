@@ -1,11 +1,11 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: redis-deploy
-  namespace: ping-ns
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
-  minReadySeconds: 1
+  replicas: {{ .Values.replicas }}
+  minReadySeconds: {{ .Values.minReadySeconds }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -14,18 +14,18 @@ spec:
   template:
     metadata:
       labels:
-        app: ping-redis
+        app: {{ .Values.service.labels.app }}
     spec:
       containers:
-      - name: ping-redis
-        image: redis
+      - name: {{ .Values.service.labels.app }}
+        image: {{ .Values.image.repository }}
         ports:
-        - containerPort: 6379
+        - containerPort: {{ .Values.service.port }}
         volumeMounts:
-        - mountPath: /data
-          name: ping-volume
+        - mountPath: {{ .Values.storage.mountPath }}
+          name: {{ .Values.storage.name }}
       volumes:
-      - name: ping-volume
+      - name: {{ .Values.storage.name }}
         persistentVolumeClaim:
-          claimName: ping-pvc
-        
+          claimName: {{ .Values.storage.claimName }}
+     

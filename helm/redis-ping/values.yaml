@@ -4,8 +4,10 @@
 
 replicaCount: 1
 
+name: redis-deploy
+namespace: ping-ns
 image:
-  repository: nginx
+  repository: redis
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -31,8 +33,16 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  name: redis-svc
+  namespace: ping-ns
+  labels:
+    app: ping-redis
   type: ClusterIP
-  port: 80
+  port: 6379
+  targetPort: 6379
+  protocol: TCP
+  selector:
+    app: ping-redis
 
 ingress:
   enabled: false
@@ -58,6 +68,11 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+storage:
+  mountPath: /data
+  name: redis-volume
+  claimName: ping-pvc
 
 nodeSelector: {}
 

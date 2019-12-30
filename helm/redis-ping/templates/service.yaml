@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-svc
-  namespace: ping-ns
+  name: {{ .Values.service.name }}
+  namespace: {{ .Values.service.namespace }}
   labels:
-    app: ping-redis
+    app: {{ .Values.service.labels.app }}
 spec:
+  type: {{ .Values.service.type }}
   ports:
-  - port: 6379
-    targetPort: 6379
-  type: ClusterIP
+  - port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.targetPort }}
+    protocol: {{ .Values.service.protocol }}
   selector:
-    app: ping-redis
+    app: {{ .Values.service.selector.app }}
