@@ -94,24 +94,30 @@ sum(kubelet_volume_stats_used_bytes{persistentvolumeclaim="redis-pvc"})
 Namespaces
 ----------
 NS CPU
+
 sum(rate(container_cpu_usage_seconds_total[5m])) by (namespace)
 
 NS RAM
+
 sum(rate(container_memory_usage_bytes[5m])) by (namespace)
 
 NS CPU - default
+
 sum(rate(container_cpu_usage_seconds_total{namespace="default"}[5m])) by (namespace)
 
 NS RAM - default
+
 sum(rate(container_memory_usage_bytes{namespace="default"}[5m])) by (namespace)
 
 
 Nodes
 -----
 Nodes CPU requests
+
 sum(kube_pod_container_resource_requests_cpu_cores) by (node)
 
 Nodes RAM requests
+
 sum(kube_pod_container_resource_requests_memory_bytes) by (node)
 
 
