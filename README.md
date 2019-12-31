@@ -118,40 +118,52 @@ sum(kube_pod_container_resource_requests_memory_bytes) by (node)
 Containers
 ----------
 Containers CPU
+
 sum(rate(container_cpu_usage_seconds_total[5m])) by (container)
 
 Containers RAM
+
 sum(rate(container_memory_usage_bytes[5m])) by (container)
 
 Containers CPU - Pingpong
+
 sum(rate(container_cpu_usage_seconds_total{container=~"ping.*"}[5m])) by (container)
 
 Containers RAM - Pingpong
+
 sum(rate(container_memory_usage_bytes{container=~"ping.*"}[5m])) by (container)
 
 Containers CPU - System (Not Pingpong)
+
 sum(rate(container_cpu_usage_seconds_total{container!~"ping.*"}[5m])) by (container)
 
 Containers RAM - System (Not Pingpong)
+
 sum(rate(container_memory_usage_bytes{container!~"ping.*"}[5m])) by (container)
 
 
 PODs
 ----
 PODs CPU
+
 sum(rate(container_cpu_usage_seconds_total[5m])) by (pod_name) 
 
 PODs RAM
+
 sum(rate(container_memory_usage_bytes[5m])) by (pod_name) 
 
 PODs CPU - Flask
+
 sum(rate(container_cpu_usage_seconds_total{pod_name=~"flask.*"}[5m])) by (pod_name) 
 
 PODs RAM - Flask
+
 sum(rate(container_memory_usage_bytes{pod_name=~"flask.*"}[5m])) by (pod_name) 
 
 PODs CPU - Redis
+
 sum(rate(container_cpu_usage_seconds_total{pod_name=~"redis.*"}[5m])) by (pod_name) 
 
 PODs RAM - Redis
+
 sum(rate(container_memory_usage_bytes{pod_name=~"redis.*"}[5m]))
