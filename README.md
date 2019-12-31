@@ -1,56 +1,58 @@
 # Ping pong
 ## Helmed Flask with Redis 
-### Query ping outputs pong counts 
+### With Helm install Prometheus and Grafana
 
-Use Helm to build Flask apps that query ping to a Redis db (separate pods) and returns pong counts.
+Use Helm to set Prometheus and Grafana to monitor the Ping-pong application
 
-Implement Helm templates:
 
-The templates are in the key:value format where the key is taken from the template and the value from the values.yaml
-
-The templates are placed under:
-
+Add the Helm stable repo
 ```bash
-        Ping-pong/helm/<app>/templates
+        helm repo add stable https://kubernetes-charts.storage.googleapis.com
 ```
 
-The values are taken from the valies.yaml file:
+Check the list:
 ```bash
-        Ping-pong/helm/<app>/values.yaml
+        helm repo list
+```
+Output:
+NAME  	URL
+stable	https://kubernetes-charts.storage.googleapis.com
+
+Search for charts:
+```bash
+        helm search repo 
 ```
 
-Example of a template formats:
-
+Search for a Prometheus chart:
 ```bash
-        name: {{ .Values.name }}
+        helm search repo prometheus
 ```
 
-- .Values: The vlaues.yaml file
-- .name: Taken from the name key in the values.yaml file.
-
-In values.yaml you will find:
+Download the Prometheus and Grafana chart:
 ```bash
-        name: my-deploy
-```
-The template above will take "my-deploy" for {{ .Values.name }}
-
-Another example:
-In the template 
-```bash
-        type: {{ .Values.service.type }}
+        helm fetch --repo https://kubernetes-charts.storage.googleapis.com --untar --untardir . prometheus
+        helm fetch --repo https://kubernetes-charts.storage.googleapis.com --untar --untardir . grafana
 ```
 
-In values.yaml you can find:
-
+Install Prometheus and Grafana:
 ```bash
-        service:
-          type: LoadBalancer
+        helm install prometheus ./prometheus
+        helm install grafana ./grafana
 ```
 
-So in values.yaml you will find:
-- .Values: The vlaues.yaml file
-- .service: The key 
-- .type: The value: Loadbalancer
+Set Grafana to use a load balance:
+```bash
+        sed -i -- 's/type: ClusterIP/type: LoadBalancer/g' grafana/values.yaml
+```
 
-In this case the template will take the LoadBalancer as the service type from the values.yaml file.
+Update Helm with the new value in valaues.yaml
+```bash
+        helm upgrade -f grafana/values.yaml grafana ./grafana
+```
+
+Wait for the pending grafana service to get the new IP:
+```bash
+        kg svc -w
+```
+
 
