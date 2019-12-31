@@ -40,6 +40,7 @@ Install Prometheus and Grafana:
         helm install grafana ./grafana
 ```
 
+Grafana settings:
 Set Grafana to use a load balance:
 ```bash
         sed -i -- 's/type: ClusterIP/type: LoadBalancer/g' grafana/values.yaml
@@ -67,7 +68,10 @@ To reset the admin password:
 
 In the Grafana GUI, click on "Add data source".
 Select Prometheus
-In the URL add: http://prometheus-server.default.svc.cluster.local
+In the URL add: 
+```bash
+        http://prometheus-server.default.svc.cluster.local
+```
 Click "Save & Test"
 
 Useful examples of graphs:
