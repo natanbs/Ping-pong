@@ -79,15 +79,19 @@ Useful examples of graphs:
 Cluster
 -------
 Cluster CPU
+
 sum(rate(container_cpu_usage_seconds_total[5m]))
 
 Cluster RAM
+
 sum(rate(container_memory_usage_bytes[5m]))
 
 Redis-pv
+
 kube_persistentvolume_capacity_bytes{persistentvolume="redis-pv"}
 
 Redis-pvc
+
 sum(kubelet_volume_stats_used_bytes{persistentvolumeclaim="redis-pvc"})
 
 
